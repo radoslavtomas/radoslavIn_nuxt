@@ -1,5 +1,5 @@
 <template>
-  <section class="home">
+  <section class="home md:p-12 p-5">
     <div>
       <!-- <h1 class="mainTitle">Radoslav Tomas</h1> -->
       <Snake/>
@@ -24,7 +24,7 @@ export default {
 */
 
 .home {
-  margin: 50px;
+  /* margin: 50px; */
   position: relative;
   /* border: 1px solid black; */
 }

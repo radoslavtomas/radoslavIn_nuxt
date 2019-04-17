@@ -15,9 +15,10 @@
   bottom: 0;
   pointer-events: none;
   z-index: -1;
+}
 
-  @media (min-width: 800px) {
-    border: 20px solid #6bd8d8;
+@screen md {
+  .page-border-decor {
     top: 20px;
     left: 20px;
     right: 20px;

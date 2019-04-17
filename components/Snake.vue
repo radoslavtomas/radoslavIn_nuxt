@@ -1,17 +1,18 @@
 <template>
   <div class="snakeWrap">
-    <div id="score" ref="score">{{ score }}</div>
-    <canvas ref="gameCanvas" id="gameCanvas" width="250" height="250"></canvas>
-
-    <div v-if="showRestart" class="gameRestart text-center mt-3">
-      <p class="text-red">Game finished</p>
-      <button
-        @click="restartGame"
-        class="bg-blue hover:bg-blue-dark text-white font-bold py-2 px-4 mt-2 rounded-full"
-      >Start again?</button>
+    <div class="flex justify-center items-center mb-2">
+      <div id="score" class="text-5xl" ref="score">{{ score }}</div>
+      <div v-if="showRestart" class="gameRestart text-center ml-3">
+        <button
+          @click="restartGame"
+          class="bg-blue hover:bg-blue-dark text-white font-bold py-2 px-4 mt-1 rounded-full"
+        >Start again?</button>
+      </div>
     </div>
 
-    <div class="mobileSnakeNav mt-4 lg:invisible">
+    <canvas ref="gameCanvas" id="gameCanvas" width="250" height="250"></canvas>
+
+    <div class="mobileSnakeNav mt-3">
       <div class="firstRow">
         <div class="arrow-wrap" @click="changeDirection({keyCode: 38})">
           <div class="arrow">
@@ -49,7 +50,7 @@
 export default {
   data() {
     return {
-      gameSpeed: 100,
+      gameSpeed: 250,
       canvasBorderColor: 'black',
       canvasBackgroundColor: 'white',
       snakeColor: 'lightgreen',
@@ -69,7 +70,8 @@ export default {
       foodY: null,
       dx: 10,
       dy: 0,
-      showRestart: false
+      showRestart: false,
+      windowWidth: null
     }
   },
   methods: {
@@ -204,6 +206,7 @@ export default {
       return hitLeftWall || hitRightWall || hitToptWall || hitBottomWall
     },
     restartGame() {
+      this.gameSpeed = 250
       this.showRestart = false
       this.snake = [
         { x: 160, y: 160 },
@@ -236,13 +239,32 @@ export default {
       }, this.gameSpeed)
     }
   },
+  watch: {
+    score() {
+      if (this.score >= 50) {
+        this.gameSpeed = 200
+      }
+
+      if (this.score >= 100) {
+        this.gameSpeed = 150
+      }
+
+      if (this.score >= 150) {
+        this.gameSpeed = 100
+      }
+    }
+  },
   mounted() {
     document.addEventListener('keydown', event => {
       event.preventDefault()
       this.changeDirection(event)
     })
+
     this.createFood()
     this.main()
+  },
+  beforeDestroy() {
+    window.removeEventListener('resize', this.getWindowWidth)
   }
 }
 </script>
@@ -256,14 +278,9 @@ export default {
   align-items: center;
 }
 
-#score {
-  text-align: center;
-  font-size: 50px;
-}
-
 .arrow-wrap {
-  width: 80px;
-  height: 80px;
+  width: 60px;
+  height: 60px;
   margin: 0 auto;
   display: flex;
   justify-content: center;
@@ -275,8 +292,8 @@ export default {
 .arrow {
   position: relative;
   margin: 0 auto;
-  width: 60px;
-  height: 60px;
+  width: 40px;
+  height: 40px;
   cursor: pointer;
 }
 
@@ -284,9 +301,9 @@ export default {
 
 .arrow .arrow-right {
   position: absolute;
-  top: 25px;
+  top: 17px;
   width: 90%;
-  height: 10px;
+  height: 6px;
   background-color: #000;
 }
 
@@ -294,8 +311,8 @@ export default {
   content: '';
   position: absolute;
   width: 60%;
-  height: 10px;
-  top: -8px;
+  height: 6px;
+  top: -6px;
   right: -8px;
   background-color: #000;
   transform: rotate(45deg);
@@ -305,8 +322,8 @@ export default {
   content: '';
   position: absolute;
   width: 60%;
-  height: 10px;
-  top: 8px;
+  height: 6px;
+  top: 6px;
   right: -8px;
   background-color: #000;
   box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2);
@@ -317,10 +334,10 @@ export default {
 
 .arrow .arrow-left {
   position: absolute;
-  top: 25px;
+  top: 17px;
   left: 5px;
   width: 90%;
-  height: 10px;
+  height: 6px;
   background-color: #000;
 }
 
@@ -328,8 +345,8 @@ export default {
   content: '';
   position: absolute;
   width: 60%;
-  height: 10px;
-  top: -8px;
+  height: 6px;
+  top: -6px;
   left: -8px;
   background-color: #000;
   transform: rotate(-45deg);
@@ -339,8 +356,8 @@ export default {
   content: '';
   position: absolute;
   width: 60%;
-  height: 10px;
-  top: 8px;
+  height: 6px;
+  top: 6px;
   left: -8px;
   background-color: #000;
   box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2);
@@ -352,8 +369,8 @@ export default {
 .arrow .arrow-up {
   position: absolute;
   top: 5px;
-  right: 25px;
-  width: 10px;
+  right: 17px;
+  width: 6px;
   height: 90%;
   background-color: #000;
 }
@@ -361,10 +378,10 @@ export default {
 .arrow .arrow-up::after {
   content: '';
   position: absolute;
-  width: 10px;
+  width: 6px;
   height: 60%;
   top: -8px;
-  right: -8px;
+  right: -6px;
   background-color: #000;
   transform: rotate(-45deg);
 }
@@ -372,10 +389,10 @@ export default {
 .arrow .arrow-up::before {
   content: '';
   position: absolute;
-  width: 10px;
+  width: 6px;
   height: 60%;
   top: -8px;
-  left: -8px;
+  left: -6px;
   background-color: #000;
   box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2);
   transform: rotate(45deg);
@@ -385,8 +402,8 @@ export default {
 
 .arrow .arrow-down {
   position: absolute;
-  right: 25px;
-  width: 10px;
+  right: 17px;
+  width: 6px;
   height: 90%;
   background-color: #000;
 }
@@ -394,10 +411,10 @@ export default {
 .arrow .arrow-down::after {
   content: '';
   position: absolute;
-  width: 10px;
+  width: 6px;
   height: 60%;
   bottom: -8px;
-  right: -8px;
+  right: -6px;
   background-color: #000;
   transform: rotate(45deg);
 }
@@ -405,17 +422,17 @@ export default {
 .arrow .arrow-down::before {
   content: '';
   position: absolute;
-  width: 10px;
+  width: 6px;
   height: 60%;
   bottom: -8px;
-  left: -8px;
+  left: -6px;
   background-color: #000;
   box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2);
   transform: rotate(-45deg);
 }
 
 .mobileSnakeNav {
-  width: 260px;
+  width: 240px;
 }
 
 .firstRow {
