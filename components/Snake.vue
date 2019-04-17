@@ -262,9 +262,6 @@ export default {
 
     this.createFood()
     this.main()
-  },
-  beforeDestroy() {
-    window.removeEventListener('resize', this.getWindowWidth)
   }
 }
 </script>

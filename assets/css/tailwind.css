@@ -63,6 +63,8 @@
 
 body {
   min-height: 100vh;
+  font-family: 'Dosis', sans-serif;
+  overflow-x: hidden;
   background-image: linear-gradient(
     to right bottom,
     #d3d4d5,
@@ -71,4 +73,6 @@ body {
     #f4f4f4,
     #ffffff
   );
+  /* background: url('./../img/bg.jpg') center center no-repeat;
+  background-size: cover; */
 }
