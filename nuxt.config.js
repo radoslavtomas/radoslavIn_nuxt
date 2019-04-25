@@ -17,7 +17,7 @@ export default {
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
       {
         rel: 'stylesheet',
-        href: 'https://fonts.googleapis.com/css?family=Dosis:400,600|Frijole'
+        href: 'https://fonts.googleapis.com/css?family=Dosis:400,600|Monoton'
       }
     ]
   },
@@ -40,7 +40,15 @@ export default {
   /*
    ** Nuxt.js modules
    */
-  modules: [],
+  modules: ['@nuxtjs/axios'],
+
+  /*
+   * Axios setup
+   */
+  axios: {
+    baseURL: 'https://api.football-data.org/v2',
+    APItoken: '4e7bf2774c02414891c545243b966cc9'
+  },
 
   /*
    ** Build configuration

@@ -75,7 +75,7 @@ export default {
 }
 
 .mainTitle {
-  font-family: 'Frijole', cursive;
+  font-family: 'Monoton', cursive;
 
   p:first-child {
     padding-right: 80px;
@@ -87,7 +87,7 @@ export default {
 }
 
 .flyin-enter-active {
-  transition: all 0.2s ease-in-out;
+  transition: all 0.3s ease-in-out;
   // transform-origin: top;
 }
 .flyin-enter {
